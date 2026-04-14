@@ -1,0 +1,30 @@
+name : CI  #name the workflow.
+
+# trigger for running action 
+on : push 
+
+# define a single job called build 
+jobs: 
+  build: 
+  # specofu build job stuff.
+    runs-on : ubuntu-latest
+
+    # action is a series of steps. thse get run in order.
+    steps : 
+      - name: Checkout repository
+        uses: actions/checkout@v5 
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v6
+        with: 
+          python-version:"3.11"
+      
+      - name: install python dependencise
+        run : | 
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt . 
+        #full stop means end of command.
+      
+      - name: test with pytest 
+        run: | 
+          python3 -m pytest --cov=inflammation.models tests/test_models.py 
