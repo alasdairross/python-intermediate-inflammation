@@ -6,10 +6,10 @@ on : push
 # define a single job called build 
 jobs: 
   build: 
-  strategy: 
-    matrix: 
-      os: ["ubuntu-latest", "macos-latest"]
-      pyhthon-version: ["3.11","3.12"]
+    strategy: 
+      matrix: 
+        os: ["ubuntu-latest", "macos-latest"]
+        pyhthon-version: ["3.11","3.12"]
 
   # specofu build job stuff.
     runs-on : ${{ matrix.os }}
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5 
 
-      - name: Set up Python ${{matirix.python-version}}
+      - name: Set up Python ${{matrix.python-version}}
         uses: actions/setup-python@v6
         with: 
           python-version: ${{matrix.python-version}}
