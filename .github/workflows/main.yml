@@ -6,18 +6,23 @@ on : push
 # define a single job called build 
 jobs: 
   build: 
+  strategy: 
+    matrix: 
+      os: ["ubuntu-latest", "macos-latest"]
+      pyhthon-version: ["3.11","3.12"]
+
   # specofu build job stuff.
-    runs-on : ubuntu-latest
+    runs-on : ${{ matrix.os }}
 
     # action is a series of steps. thse get run in order.
     steps : 
       - name: Checkout repository
         uses: actions/checkout@v5 
 
-      - name: Set up Python 3.11
+      - name: Set up Python ${{matirix.python-version}}
         uses: actions/setup-python@v6
         with: 
-          python-version: "3.11"
+          python-version: ${{matrix.python-version}}
       
       - name: install python dependencise
         run : | 
